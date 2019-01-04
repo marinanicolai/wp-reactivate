@@ -29,10 +29,9 @@ export default class Shortcode extends Component {
   }
 
   getCurrentPost() {
-    let postId = this.props.wpObject.post_id;
+    const postId = this.props.wpObject.post_id;
     const { categories } = this.state;
 
-    postId = 13110
     axios.get('http://nicolaimarina.com/wp-json/wp/v2/posts/' + postId)
     .then(({ data }) => {
       const currentPostCategoryIds = R.propOr([], 'categories', data);
