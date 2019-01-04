@@ -81,13 +81,18 @@ class Shortcode {
 	public function shortcode( $atts ) {
 		wp_enqueue_script( $this->plugin_slug . '-shortcode-script' );
 		wp_enqueue_style( $this->plugin_slug . '-shortcode-style' );
+		global $wp_query; 
 
 		$object_name = 'wpr_object_' . uniqid();
+		$postid = $wp_query->post->ID;
+		$assetPath = get_template_directory_uri();
 
 		$object = shortcode_atts( array(
 			'title'       => 'Hello world',
 			'api_nonce'   => wp_create_nonce( 'wp_rest' ),
 			'api_url'	  => rest_url( $this->plugin_slug . '/v1/' ),
+			'post_id' => $postid,
+			'assetPath' => $assetPath,
 		), $atts, 'wp-reactivate' );
 
 		wp_localize_script( $this->plugin_slug . '-shortcode-script', $object_name, $object );
